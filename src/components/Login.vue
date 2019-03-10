@@ -24,9 +24,6 @@
   import sha256 from 'sha256'
   import $cookies from 'vue-cookie'
 
-  // axios.defaults.baseURL = "http://127.0.0.1:9080"
-  axios.defaults.baseURL = "https://api.craftsoft.eu"
-
   export default {
     name: "Login",
     data() {

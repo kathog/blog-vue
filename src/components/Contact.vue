@@ -190,9 +190,6 @@ Copyright &copy;All rights reserved | This template is made with <i class="fa fa
   import axios from 'axios';
   import moment from 'moment';
 
-  // axios.defaults.baseURL = "http://127.0.0.1:9080"
-  axios.defaults.baseURL = "https://api.craftsoft.eu"
-
   export default {
     name: "Index",
     data() {

@@ -172,9 +172,6 @@ Copyright &copy;All rights reserved | This template is made with <i class="fa fa
   import axios from 'axios';
   import moment from 'moment';
 
-  // axios.defaults.baseURL = "http://127.0.0.1:9080"
-  axios.defaults.baseURL = "https://api.craftsoft.eu"
-
   export default {
     name: "Index",
     data() {
@@ -209,9 +206,7 @@ axios.get("/last")
 
           axios.post("/mostViewed")
           .then(response => {
-            // JSON responses are automatically parsed.
             this.mostRead = response.data
-            // console.log(this.posts)
           })
           .catch(e => {
             console.log(e)
@@ -225,17 +220,7 @@ axios.get("/last")
 
       axios.get("/tagCloud")
         .then(response => {
-          // JSON responses are automatically parsed.
-          this.tags0 = response.data
-          this.tags = Object.keys(this.tags0)
-            .map(t => {
-              this.$set(this.tags0[t], 'key', t)
-              return this.tags0[t]
-            })
-            .sort(this.sortProperty('value'));
-
-
-          // console.log(this.tags)
+          this.tags = response.data
         })
         .catch(e => {
           console.log(e)
@@ -244,9 +229,7 @@ axios.get("/last")
 
       axios.post("/mostViewed")
           .then(response => {
-            // JSON responses are automatically parsed.
             this.mostRead = response.data
-            // console.log(this.posts)
           })
           .catch(e => {
             console.log(e)
@@ -281,21 +264,16 @@ axios.get("/last")
       },
 
       tagCss(tag) {
-        // console.log("tag: " + tag);
         let idx = this.tags.findIndex(t => t.name == tag)
-        // console.log("idx: " + idx);
-
         let style = "post-category";
         if (idx < 4) {
           style += " cat-" + (idx + 1);
         }
-        // console.log(style);
         return style;
       },
 
       showTag(tag) {
         let idx = this.tags.findIndex(t => t.name == tag.name);
-        // console.log("show idx: " + idx);
         if (idx > 3) {
           return true;
         }
