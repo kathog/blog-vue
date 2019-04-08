@@ -276,7 +276,7 @@ export default {
         }
       };
       axios
-        .post("/pingAuth", "", config)
+        .get("/pingAuth", "", config)
         .then(response => {})
         .catch(e => {
           this.$router.push("/login");

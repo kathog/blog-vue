@@ -199,7 +199,7 @@ axios.get("/last")
         this.page = 1;
         this.more = true;
 
-          axios.post("/mostViewed")
+          axios.get("/mostViewed")
           .then(response => {
             this.mostRead = response.data
           })
@@ -222,7 +222,7 @@ axios.get("/last")
           this.errors.push(e)
         });
 
-      axios.post("/mostViewed")
+      axios.get("/mostViewed")
           .then(response => {
             this.mostRead = response.data
           })

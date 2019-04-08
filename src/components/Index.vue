@@ -287,7 +287,7 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("auth_token")
       }
     };
-    axios.post("/pingAuth", "", config).then(response => {
+    axios.get("/pingAuth", "", config).then(response => {
         this.editable = true;
         var path0 = path.replace("/", "/searchFull");
         axios.get(path0, config).then(response => {
@@ -308,7 +308,7 @@ export default {
       });
 
     axios
-      .post("/mostViewed")
+      .get("/mostViewed")
       .then(response => {
         this.mostRead = response.data;
       })
