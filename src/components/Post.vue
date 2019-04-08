@@ -36,9 +36,6 @@
     <div class="section">
       <!-- container -->
       <div class="container">
-        <ul v-if="errors && errors.length">
-          <li v-for="error of errors">{{error.message}}</li>
-        </ul>
         <!-- row -->
         <div class="row">
           <div class="row">
@@ -304,7 +301,7 @@ export default {
       });
 
     axios
-      .post("/mostViewed")
+      .get("/mostViewed")
       .then(response => {
         this.mostRead = response.data;
       })
@@ -335,7 +332,7 @@ export default {
 
     if (!this.editable) {
       axios
-        .post("/post/inc/" + this.$route.params.id)
+        .get("/post/inc/" + this.$route.params.id)
         .then(response => {})
         .catch(e => {
           console.log(e);

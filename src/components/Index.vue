@@ -47,9 +47,6 @@
     <div class="section">
       <!-- container -->
       <div class="container">
-        <ul v-if="errors && errors.length">
-          <li v-for="error of errors">{{error.message}}</li>
-        </ul>
         <!-- row -->
         <div class="row">
           <div class="row">
@@ -267,7 +264,7 @@ export default {
           this.errors.push(e);
         });
 
-      axios.post("/mostViewed").then(response => {
+      axios.get("/mostViewed").then(response => {
           this.mostRead = response.data;
         }).catch(e => {
           console.log(e);

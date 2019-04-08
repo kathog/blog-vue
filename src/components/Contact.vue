@@ -37,11 +37,6 @@
     <div class="section">
       <!-- container -->
       <div class="container">
-        <ul v-if="errors && errors.length">
-          <li v-for="error of errors">
-            {{error.message}}
-          </li>
-        </ul>
         <!-- row -->
         <div class="row">
           <div class="row">
