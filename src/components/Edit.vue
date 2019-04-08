@@ -25,10 +25,6 @@
     <div class="section">
       <!-- container -->
       <div class="container">
-        <ul v-if="errors && errors.length">
-          <li v-for="error of errors">{{error.message}}</li>
-        </ul>
-        <!-- row -->
         <div class="row">
           <div class="row">
             <div class="col-md-12">
@@ -174,7 +170,7 @@ export default {
     },
 
     postUrl(postId) {
-      return "/#/post/" + postId.$oid;
+      return "/#/post/" + postId;
     },
 
     tagUrl(tag) {
@@ -236,10 +232,10 @@ export default {
 
       this.test01();
 
-      if (this.post._id != null) {
+      if (this.post.id != null) {
         let content = JSON.stringify(this.post);
         axios
-          .post("/post/edit/" + this.post._id.$oid, content, config)
+          .post("/post/edit/" + this.post.id, content, config)
           .then(response => {
             let data0 = response.data;
             this.$router.push("/post/" + data0);

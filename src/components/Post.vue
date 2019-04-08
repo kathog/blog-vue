@@ -48,11 +48,11 @@
                   <div class="post post-row">
                     <!--                  <a class="post-img" href="blog-post.html"><img src="/static/img/Empty.jpg" alt=""></a>-->
                     <div class="post-body-noimg">
-                      <!--                      <h3 class="post-title"><a v-bind:href="postUrl(post._id)">{{post.title}}</a></h3>-->
+                      <!--                      <h3 class="post-title"><a v-bind:href="postUrl(post.id)">{{post.title}}</a></h3>-->
                       <p v-html="post.content"></p>
                     </div>
                     <div class="post-meta" v-if="editable">
-                      <router-link class="post-category" :to="'/edit/'+post._id.$oid">Edytuj</router-link>
+                      <router-link class="post-category" :to="'/edit/'+post.id">Edytuj</router-link>
                       <a href="#" class="post-category" v-on:click="deletePost()">Usuń</a>
                     </div>
                   </div>
@@ -80,10 +80,10 @@
                       <div class="media-heading">
                         <h4>{{comment0.username}}</h4>
                         <span class="time">{{getDate(comment0.date)}}</span>
-                        <!-- <a href="#" class="reply">Reply</a> -->
+                        <a v-if="editable" v-on:click="removeComment(comment0.id)" class="reply">Usuń</a>
                       </div>
-                      <p>{{comment0.message}}</p>
-                      <!-- <p style="display: none">{{comment0._id.$oid}}</p> -->
+                      <p>{{decodeURIComponent(comment0.message)}}</p>
+                      <!-- <p style="display: none">{{comment0.id}}</p> -->
                       <!-- comment -->
                       <!-- <div class="media">
 											<div class="media-left">
@@ -178,7 +178,7 @@
                 <div class="post post-widget" v-for="post of mostRead">
                   <div class="post-body-noimg">
                     <h3 class="post-title">
-                      <a v-bind:href="postUrl(post._id)">{{post.title}}</a>
+                      <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
                     </h3>
                     <!-- <p v-html="showFirstP(post.description)"></p> -->
                   </div>
@@ -192,7 +192,7 @@
                 <div class="post post-widget" v-for="post of lastAdded">
                   <div class="post-body-noimg">
                     <h3 class="post-title">
-                      <a v-bind:href="postUrl(post._id)">{{post.title}}</a>
+                      <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
                     </h3>
                     <!-- <p v-html="showFirstP(post.description)"></p> -->
                   </div>
@@ -365,7 +365,7 @@ export default {
     },
 
     postUrl(postId) {
-      return "/#/post/" + postId.$oid;
+      return "/#/post/" + postId;
     },
 
     tagUrl(tag) {
@@ -424,7 +424,7 @@ export default {
         }
       };
       axios
-        .post("/post/delete/" + this.post._id.$oid, "", config)
+        .post("/post/delete/" + this.post.id, "", config)
         .then(response => {
           this.$router.push("/");
         })
@@ -441,32 +441,51 @@ export default {
       return description.substring(0, pIdx);
     },
 
+    removeComment (commentId) {
+    axios.post("/deleteComment/" + commentId).then(response => {
+          axios.get("/comments/" + this.post.id).then(response => {
+              this.comments = response.data;
+            }).catch(e => {
+              console.log(e);
+              this.errors.push(e);
+            });
+          
+        }).catch(e => {
+          console.log(e);
+        });
+    },
+
     doSend: function(event) {
+      var commentMsg = encodeURIComponent(this.comment.message);
       let msg =
         '{"email": "' +
         this.comment.email +
         '", "message": "' +
-        this.comment.message +
+        commentMsg +
         '","username":"' +
         this.comment.username +
         '","postId":"' +
-        this.post._id.$oid +
+        this.post.id +
         '"}';
-      axios
-        .post("/pushComment/" + this.post._id.$oid, msg)
-        .then(response => {
-          axios
-            .get("/comments/" + this.post._id.$oid)
-            .then(response => {
+
+console.log(commentMsg);
+      axios.post("/pushComment/" + this.post.id, msg).then(response => {
+          axios.get("/comments/" + this.post.id).then(response => {
               this.comments = response.data;
               this.comment.email = '';
               this.comment.message = '';
               this.comment.username = '';
-            })
-            .catch(e => {
+            }).catch(e => {
               console.log(e);
               this.errors.push(e);
             });
+            
+          var message = "dodano nowy komentarz o treści: '"+commentMsg +"' do posta https://craftsoft.eu/#/post/" + this.post.id; 
+          msg = "{\"email\": \"nerull@craftsoft.eu\", \"message\": \"" + message + "\"}";
+          axios.post("/send", msg).then(response => {
+            })
+            .catch(e => {
+            });  
         })
         .catch(e => {
           console.log(e);

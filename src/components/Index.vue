@@ -69,7 +69,7 @@
                         <span class="post-date">{{ getDate(post.date.$date) }}</span>
                       </div>
                       <h3 class="post-title">
-                        <a v-bind:href="postUrl(post._id)">{{post.title}}</a>
+                        <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
                       </h3>
                       <p v-html="post.description"></p>
                     </div>
@@ -120,7 +120,7 @@
                 <div class="post post-widget" v-for="post of mostRead">
                   <div class="post-body-noimg">
                     <h3 class="post-title">
-                      <a v-bind:href="postUrl(post._id)">{{post.title}}</a>
+                      <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
                     </h3>
                     <!-- <p v-html="showFirstP(post.description)"></p> -->
                     <!-- <div style="display: none">{{post.count}}</div> -->
@@ -135,7 +135,7 @@
                 <div class="post post-widget" v-for="post of lastAdded">
                   <div class="post-body-noimg">
                     <h3 class="post-title">
-                      <a v-bind:href="postUrl(post._id)">{{post.title}}</a>
+                      <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
                     </h3>
                     <!-- <p v-html="showFirstP(post.description)"></p> -->
                   </div>
@@ -329,7 +329,7 @@ export default {
     },
 
     postUrl(postId) {
-      return "/#/post/" + postId.$oid;
+      return "/#/post/" + postId;
     },
 
     tagUrl(tag) {
