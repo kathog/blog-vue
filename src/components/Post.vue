@@ -401,7 +401,7 @@ export default {
         }
       };
       axios
-        .get("/pingAuth", "", config)
+        .get("/pingAuth", config)
         .then(response => {
           this.editable = true;
         })

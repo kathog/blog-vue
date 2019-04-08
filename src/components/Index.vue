@@ -287,7 +287,8 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("auth_token")
       }
     };
-    axios.get("/pingAuth", "", config).then(response => {
+    console.log(localStorage.getItem("auth_token"));
+    axios.get("/pingAuth", config).then(response => {
         this.editable = true;
         var path0 = path.replace("/", "/searchFull");
         axios.get(path0, config).then(response => {
