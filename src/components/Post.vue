@@ -19,7 +19,7 @@
                       v-bind:class="tagCss(tag)"
                       v-bind:href="tagUrl(tag)"
                     >{{tag}}</a>
-                    <span class="post-date">{{ getDate(post.date.$date) }}</span>
+                    <span class="post-date">{{ getDate(post.date) }}</span>
                   </div>
                 </div>
                 <h1>{{post.title}}</h1>
