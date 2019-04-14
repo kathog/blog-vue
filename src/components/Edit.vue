@@ -35,6 +35,10 @@
                     <input class="input" v-model="post.title" type="text" name="name">
                   </div>
                   <div class="form-group">
+                    <span>Zdjęcie</span>
+                    <input class="input" v-model="post.image" type="text" name="image">
+                  </div>
+                  <div class="form-group">
                     <span>Kategorie</span>
                     <vue-tags-input
                       v-model="tag"

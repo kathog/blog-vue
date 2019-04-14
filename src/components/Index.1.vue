@@ -1,63 +1,7 @@
 <template >
   <div>
-
-    <!-- HEADER -->
-	<header id="header">
-		<!-- NAV -->
-		<div id="nav">
-			<!-- Top Nav -->
-			<div id="nav-top" style="background: #1b1c1e;">
-				<div class="container">
-
-          <div class="nav-logo">
-						<h3><a href="/#/" class="logo" style="color: #fff;">DevOps tech blog</a></h3>
-					</div>
-          
-
-          <!-- search & aside toggle -->
-					<div class="nav-btns">
-						<!-- <button class="aside-btn"><i class="fa fa-bars"></i></button> -->
-						<!-- <button class="search-btn"><i class="fa fa-search"></i></button> -->
-						<!-- <div id="nav-search">
-							<form>
-								<input class="input" name="search" placeholder="Enter your search...">
-							</form>
-							<button class="nav-close search-close">
-								<span></span>
-							</button> -->
-              <form class="search-top-form" @submit.prevent="search">
-                <!-- <span class="icon fa fa-search"></span> -->
-                    <input style="background: #323335; border:none" type="text" v-model="searchValue" placeholder="szukaj" class="input">
-            </form>
-						<!-- </div> -->
-            
-					</div>
-					<!-- /search & aside toggle -->
-
-
-				</div>
-			</div>
-
-
-      <div id="nav-bottom">
-				<div class="container">
-					<!-- nav -->
-					<ul class="nav-menu">
-            <li>
-              <a href="/#/" class="logo">HOME</a>
-            </li>
-            <li v-for="tag of tags" v-if="!showTag(tag)"><a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a></li>
-					</ul>
-				</div>
-      </div>
-
-
-
-		</div>
-	</header>
-
-
-    <!-- <header id="header">
+    <header id="header">
+      <!-- Page Header -->
       <div id="post-header" class="page-header">
         <div class="background-img" style="background-image: url('/static/img/nano.jpg');"></div>
         <div class="container">
@@ -65,19 +9,21 @@
             <div class="col-md-18">
               <div class="row">
                 <div class="col-md-8">
-                  <div class="post post-thumb">
+                  <div class="post-meta">
                     <div>
-                      <h3 class="post-title"><router-link to="/">CRAFTSOFT BLOG</router-link></h3>                    
+                      <router-link class="post-category" to="/">CRAFTSOFT BLOG</router-link>
                     </div>
-                    <div  class="tags-widget">
-                      <ul>
-                        <li v-for="tag of tags">
-                          <a v-if="!showTag(tag)" v-bind:class="tagCss(tag.name)" v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
-                        </li>
-                      </ul>
+                    <br>
+                    <div>
+                      <a
+                        v-for="tag of tags"
+                        v-if="!showTag(tag)"
+                        v-bind:class="tagCss(tag.name)"
+                        v-bind:href="tagUrl(tag.name)"
+                      >{{tag.name}}</a>
                     </div>
-                    <h1>DevOps tech blog</h1>
                   </div>
+                  <h1>DevOps tech blog</h1>
                 </div>
                 <div class="col-md-4">
                   <form class="login" @submit.prevent="search">
@@ -95,166 +41,123 @@
           </div>
         </div>
       </div>
-      </header> -->
+      <!-- /Page Header -->
+    </header>
 
-    <!-- SECTION -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div id="hot-post" class="row hot-post">
-				<div class="col-md-8 hot-post-left">
-					<!-- post -->
-					<div class="post post-thumb" v-if="posts.length > 0">
-						<a class="post-img" v-bind:href="postUrl(posts[0].id)"><img v-bind:src="posts[0].image"  alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-                <a v-for="tag of posts[0].tags.split(',')" v-bind:class="tagCss(tag)" v-bind:href="tagUrl(tag)">{{tag}}</a>
-							</div>
-							<h3 class="post-title title-lg"><a v-bind:href="postUrl(posts[0].id)">{{posts[0].title}}</a></h3>
-							<ul class="post-meta">
-								<li><a href="/#/about">Nerull</a></li>
-								<li>{{ getDate(posts[0].date) }}</li>
-							</ul>
-						</div>
-					</div>
-					<!-- /post -->
-				</div>
-				<div class="col-md-4 hot-post-right">
-					<!-- post -->
-					<div class="post post-thumb" v-if="posts.length > 1">
-						<a class="post-img" v-bind:href="postUrl(posts[1].id)"><img v-bind:src="posts[1].image"  alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a v-for="tag of posts[1].tags.split(',')" v-bind:class="tagCss(tag)" v-bind:href="tagUrl(tag)">{{tag}}</a>
-							</div>
-							<h3 class="post-title"><a v-bind:href="postUrl(posts[1].id)">{{posts[1].title}}</a></h3>
-							<ul class="post-meta">
-								<li><a href="/#/about">Nerull</a></li>
-								<li>{{ getDate(posts[1].date) }}</li>
-							</ul>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- post -->
-					<div class="post post-thumb" v-if="posts.length > 2">
-						<a class="post-img" v-bind:href="postUrl(posts[2].id)"><img v-bind:src="posts[2].image"  alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a v-for="tag of posts[2].tags.split(',')" v-bind:class="tagCss(tag)" v-bind:href="tagUrl(tag)">{{tag}}</a>
-							</div>
-							<h3 class="post-title"><a v-bind:href="postUrl(posts[2].id)">{{posts[2].title}}</a></h3>
-							<ul class="post-meta">
-								<li><a href="/#/about">Nerull</a></li>
-								<li>{{ getDate(posts[2].date) }}</li>
-							</ul>
-						</div>
-					</div>
-					<!-- /post -->
-				</div>
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /SECTION -->
-
-
-<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<div class="col-md-8">
-					<!-- row -->
-					<div class="row">
-						<div class="col-md-12">
-							<div class="section-title">
-								<h2 class="title">Pozostałe posty</h2>
-							</div>
-						</div>
-						<!-- post -->
-						<div class="col-md-6" v-if="index > 2" v-for="(post, index) of posts">
-							<div class="post" >
-								<a class="post-img" v-bind:href="postUrl(post.id)"><img v-bind:src="post.image" alt=""></a>
-								<div class="post-body">
-									<div class="post-category">
-										<a v-for="tag of post.tags.split(',')" v-bind:class="tagCss(tag)" v-bind:href="tagUrl(tag)">{{tag}}</a>
-									</div>
-									<h3 class="post-title"><a v-bind:href="postUrl(post.id)">{{post.title}}</a></h3>
-                  <ul class="post-meta">
-                    <li><a href="/#/about">Nerull</a></li>
-                    <li>{{ getDate(post.date) }}</li>
-                  </ul>
-								</div>
-							</div>
-						</div>
-            <div class="col-md-12" v-if="more && posts.length >= 10">
-                  <div class="section-row loadmore text-center">
-                    <button v-on:click="nextPage" class="primary-button">Więcej</button>
+    <div class="section">
+      <!-- container -->
+      <div class="container">
+        <!-- row -->
+        <div class="row">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="row">
+                <div class="col-md-12" v-for="post of posts">
+                  <div class="post post-row">
+                    <a v-if="post.image" class="post-img" href="blog-post.html"><img v-bind:src="post.image" alt=""></a>
+                    <div v-if="post.image" class="post-body">
+                      <div class="post-meta">
+                        <!--                        <router-link v-for="tag of post.tags.split(',')" v-bind:class="tagCss(tag)" :to="tagUrl(tag)">{{tag}}</router-link>-->
+                        <a
+                          v-for="tag of post.tags.split(',')"
+                          v-bind:class="tagCss(tag)"
+                          v-bind:href="tagUrl(tag)"
+                        >{{tag}}</a>
+                        <span class="post-date">{{ getDate(post.date) }}</span>
+                      </div>
+                      <h3 class="post-title">
+                        <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
+                      </h3>
+                      <p v-html="post.description"></p>
+                    </div>
+                    <div v-if="!post.image" class="post-body-noimg">
+                      <div class="post-meta">
+                        <!--                        <router-link v-for="tag of post.tags.split(',')" v-bind:class="tagCss(tag)" :to="tagUrl(tag)">{{tag}}</router-link>-->
+                        <a
+                          v-for="tag of post.tags.split(',')"
+                          v-bind:class="tagCss(tag)"
+                          v-bind:href="tagUrl(tag)"
+                        >{{tag}}</a>
+                        <span class="post-date">{{ getDate(post.date) }}</span>
+                      </div>
+                      <h3 class="post-title">
+                        <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
+                      </h3>
+                      <p v-html="post.description"></p>
+                    </div>
                   </div>
                 </div>
-						<!-- /post -->
-            </div>
-            </div>
-				<!-- </div> -->
-				<div class="col-md-4">
-					<!-- ad widget-->
-					<div class="aside-widget text-center">
-						<a href="#" style="display: inline-block;margin: auto;">
-							<img class="img-responsive" src="" alt="">
-						</a>
-					</div>
-					<!-- /ad widget -->
 
-					<!-- category widget -->
-					<div class="aside-widget">
-						<div class="section-title">
-							<h2 class="title">Kategorie</h2>
-						</div>
-						<div class="category-widget">
-							<ul>
-                <li v-for="tag of tags" v-if="!showTag(tag)">
-                      <a v-bind:href="tagUrl(tag.name)">
+                <div class="col-md-12" v-if="more && posts.length >= 5">
+                  <div class="section-row">
+                    <button v-on:click="nextPage" class="primary-button center-block">Więcej</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <!-- catagories -->
+              <div class="aside-widget">
+                <div class="section-title">
+                  <h2>Kategorie</h2>
+                </div>
+                <div class="category-widget">
+                  <ul>
+                    <li v-for="tag of tags" v-if="!showTag(tag)">
+                      <a v-bind:class="tagCss(tag.name)" v-bind:href="tagUrl(tag.name)">
                         {{tag.name}}
                         <span>{{tag.value}}</span>
                       </a>
                     </li>
-							</ul>
-						</div>
-					</div>
-					<!-- /category widget -->
-
-					<!-- post widget -->
-					<div class="aside-widget">
-						<div class="section-title">
-							<h2 class="title">Popularne posty</h2>
-						</div>
-
-
-             <div class="post post-widget" v-for="post of mostRead">
-                    <a class="post-img" v-bind:href="postUrl(post.id)"><img v-bind:src="post.image" alt=""></a>
-                      <div class="post-body">
-                        <div class="post-category">
-                          <a v-for="tag of post.tags.split(',')" v-bind:class="tagCss(tag)" v-bind:href="tagUrl(tag)">{{tag}}</a>
-                        </div>
-                        <h3 class="post-title"><a v-bind:href="postUrl(post.id)">{{post.title}}</a></h3>
-                      </div>
+                  </ul>
+                </div>
+              </div>
+              <!-- /catagories -->
+              <!-- tags -->
+              <div class="aside-widget">
+                <div class="tags-widget">
+                  <ul>
+                    <li v-for="tag of tags" v-if="showTag(tag)">
+                      <a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- /tags -->
+              <div class="aside-widget">
+                <div class="section-title">
+                  <h2>Najczęściej czytane</h2>
+                </div>
+                <div class="post post-widget" v-for="post of mostRead">
+                  <div class="post-body-noimg">
+                    <h3 class="post-title">
+                      <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
+                    </h3>
+                    <!-- <p v-html="showFirstP(post.description)"></p> -->
+                    <!-- <div style="display: none">{{post.count}}</div> -->
                   </div>
-				
-						<!-- /post -->
-					</div>
-					<!-- /post widget -->
-				</div>
-			
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /SECTION -->
-</div>
+                </div>
+              </div>
 
+              <div class="aside-widget">
+                <div class="section-title">
+                  <h2>Najnowsze</h2>
+                </div>
+                <div class="post post-widget" v-for="post of lastAdded">
+                  <div class="post-body-noimg">
+                    <h3 class="post-title">
+                      <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
+                    </h3>
+                    <!-- <p v-html="showFirstP(post.description)"></p> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer id="footer">
@@ -286,11 +189,11 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col-md-3"></div> -->
+          <div class="col-md-3"></div>
 
-          <div class="col-md-6">
+          <div class="col-md-4">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-6">
                 <div class="footer-widget">
                   <h3 class="footer-title">About</h3>
                   <ul class="footer-links">
@@ -303,16 +206,14 @@
                   </ul>
                 </div>
               </div>
-              <div class="col-md-9">
+              <div class="col-md-6">
                 <div class="footer-widget">
                   <h3 class="footer-title">Kategorie</h3>
-                  <div  class="tags-widget">
-                      <ul>
-                        <li v-for="tag of tags">
-                          <a  v-bind:class="tagCss(tag.name)" v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
-                        </li>
-                      </ul>
-                    </div>
+                  <ul class="footer-links">
+                    <li v-for="tag of tags" v-if="!showTag(tag)">
+                      <a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -467,7 +368,7 @@ export default {
 
     showTag(tag) {
       let idx = this.tags.findIndex(t => t.name == tag.name);
-      if (idx > 4) {
+      if (idx > 3) {
         return true;
       }
       return false;

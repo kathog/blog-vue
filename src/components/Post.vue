@@ -1,38 +1,83 @@
 <template>
   <div>
-    <header id="header">
-      <!-- Page Header -->
-      <div id="post-header" class="page-header">
-        <div class="background-img" style="background-image: url('/static/img/nano.jpg');"></div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="post-meta">
-                  <div>
-                    <router-link class="post-category" to="/">CRAFTSOFT BLOG</router-link>
-                  </div>
-                  <br>
-                  <div v-if="post.tags != null">
-                    <a
-                      v-for="tag of post.tags.split(',')"
-                      v-bind:class="tagCss(tag)"
-                      v-bind:href="tagUrl(tag)"
-                    >{{tag}}</a>
-                    <span class="post-date">{{ getDate(post.date) }}</span>
-                  </div>
-                </div>
-                <h1>{{post.title}}</h1>
-              </div>
-            </div>
-          </div>
-        </div>
+
+        <!-- HEADER -->
+	<header id="header">
+		<!-- NAV -->
+		<div id="nav">
+			<!-- Top Nav -->
+			<div id="nav-top" style="background: #1b1c1e;">
+				<div class="container">
+
+          <div class="nav-logo">
+						<h3><a href="/#/" class="logo" style="color: #fff;">DevOps tech blog</a></h3>
+					</div>
+          
+
+          <!-- search & aside toggle -->
+					<div class="nav-btns">
+						<!-- <button class="aside-btn"><i class="fa fa-bars"></i></button> -->
+						<!-- <button class="search-btn"><i class="fa fa-search"></i></button> -->
+						<!-- <div id="nav-search">
+							<form>
+								<input class="input" name="search" placeholder="Enter your search...">
+							</form>
+							<button class="nav-close search-close">
+								<span></span>
+							</button> -->
+              <form class="search-top-form" @submit.prevent="search">
+                <!-- <span class="icon fa fa-search"></span> -->
+                    <input style="background: #323335; border:none" type="text" v-model="searchValue" placeholder="szukaj" class="input">
+            </form>
+						<!-- </div> -->
+            
+					</div>
+					<!-- /search & aside toggle -->
+
+
+				</div>
+			</div>
+
+
+      <div id="nav-bottom">
+				<div class="container">
+					<!-- nav -->
+					<ul class="nav-menu">
+            <li>
+              <a href="/#/" class="logo">HOME</a>
+            </li>
+            <li v-for="tag of tags" v-if="!showTag(tag)"><a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a></li>
+					</ul>
+				</div>
       </div>
-      <!-- /Page Header -->
-    </header>
-    <!--    <router-link to="/firstroute/dup">Link to route one, child one</router-link>-->
-    <!-- section -->
-    <!--    {{doSearch()}}-->
+
+
+
+		</div>
+
+    <!-- PAGE HEADER -->
+		<div id="post-header" class="page-header">
+			<div class="page-header-bg" v-bind:style="showImg(post)" data-stellar-background-ratio="0.5"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-10">
+						<div class="post-category">
+							<a v-for="tag of post.tags.split(',')"  v-bind:href="tagUrl(tag)">{{tag}}</a>
+						</div>
+						<h1>{{post.title}}</h1>
+						<ul class="post-meta">
+							<li><a href="/#/about">Nerull</a></li>
+							<li>{{ getDate(post.date) }}</li>
+							<li><i class="fa fa-comments"></i> 0</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /PAGE HEADER -->
+	</header>
+
+
     <div class="section">
       <!-- container -->
       <div class="container">
@@ -48,11 +93,22 @@
                       <!--                      <h3 class="post-title"><a v-bind:href="postUrl(post.id)">{{post.title}}</a></h3>-->
                       <p v-html="post.content"></p>
                     </div>
-                    <div class="post-meta" v-if="editable">
-                      <router-link class="post-category" :to="'/edit/'+post.id">Edytuj</router-link>
-                      <a href="#" class="post-category" v-on:click="deletePost()">Usuń</a>
-                    </div>
+                    
                   </div>
+
+                  <div class="aside-widget" v-if="editable">
+                      <div class="tags-widget">
+                        <ul>
+                          <li>
+                            <router-link class="post-category" :to="'/edit/'+post.id">Edytuj</router-link>
+                          </li>
+                          <li>
+                            <a href="#" class="post-category" v-on:click="deletePost()">Usuń</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
                 </div>
               </div>
 
@@ -103,7 +159,7 @@
               </div>
               <!-- /comments -->
               <!-- reply -->
-              <div class="section-row">
+              <!-- <div class="section-row">
                 <div class="section-title">
                   <h2>Zostaw komentarz</h2>
                   <p>Twój mail nie zostanie upubliczniony. Wymagane pola są oznaczone *</p>
@@ -135,28 +191,28 @@
                     </div>
                   </div>
                 </form>
-              </div>
+              </div> -->
               <!-- /reply -->
             </div>
 
             <div class="col-md-4">
-              <!-- catagories -->
-              <div class="aside-widget">
-                <div class="section-title">
-                  <h2>Kategorie</h2>
-                </div>
-                <div class="category-widget">
-                  <ul>
-                    <li v-for="tag of tags" v-if="!showTag(tag)">
-                      <a v-bind:class="tagCss(tag.name)" v-bind:href="tagUrl(tag.name)">
+              <!-- category widget -->
+					<div class="aside-widget">
+						<div class="section-title">
+							<h2 class="title">Kategorie</h2>
+						</div>
+						<div class="category-widget">
+							<ul>
+                <li v-for="tag of tags" v-if="!showTag(tag)">
+                      <a v-bind:href="tagUrl(tag.name)">
                         {{tag.name}}
                         <span>{{tag.value}}</span>
                       </a>
                     </li>
-                  </ul>
-                </div>
-              </div>
-              <!-- /catagories -->
+							</ul>
+						</div>
+					</div>
+					<!-- /category widget -->
               <!-- tags -->
               <div class="aside-widget">
                 <div class="tags-widget">
@@ -168,33 +224,26 @@
                 </div>
               </div>
               <!-- /tags -->
-              <div class="aside-widget">
-                <div class="section-title">
-                  <h2>Najczęściej czytane</h2>
-                </div>
-                <div class="post post-widget" v-for="post of mostRead">
-                  <div class="post-body-noimg">
-                    <h3 class="post-title">
-                      <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
-                    </h3>
-                    <!-- <p v-html="showFirstP(post.description)"></p> -->
-                  </div>
-                </div>
-              </div>
+              <!-- post widget -->
+					<div class="aside-widget">
+						<div class="section-title">
+							<h2 class="title">Popularne posty</h2>
+						</div>
 
-              <div class="aside-widget">
-                <div class="section-title">
-                  <h2>Najnowsze</h2>
-                </div>
-                <div class="post post-widget" v-for="post of lastAdded">
-                  <div class="post-body-noimg">
-                    <h3 class="post-title">
-                      <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
-                    </h3>
-                    <!-- <p v-html="showFirstP(post.description)"></p> -->
+
+             <div class="post post-widget" v-for="post of mostRead">
+                    <a class="post-img" v-bind:href="postUrl(post.id)"><img v-bind:src="post.image" alt=""></a>
+                      <div class="post-body">
+                        <div class="post-category">
+                          <a v-for="tag of post.tags.split(',')" v-bind:class="tagCss(tag)" v-bind:href="tagUrl(tag)">{{tag}}</a>
+                        </div>
+                        <h3 class="post-title"><a v-bind:href="postUrl(post.id)">{{post.title}}</a></h3>
+                      </div>
                   </div>
-                </div>
-              </div>
+				
+						<!-- /post -->
+					</div>
+					<!-- /post widget -->
             </div>
           </div>
         </div>
@@ -231,11 +280,11 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3"></div>
+          <!-- <div class="col-md-3"></div> -->
 
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <div class="footer-widget">
                   <h3 class="footer-title">About</h3>
                   <ul class="footer-links">
@@ -248,14 +297,16 @@
                   </ul>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-9">
                 <div class="footer-widget">
                   <h3 class="footer-title">Kategorie</h3>
-                  <ul class="footer-links">
-                    <li v-for="tag of tags" v-if="!showTag(tag)">
-                      <a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
-                    </li>
-                  </ul>
+                  <div  class="tags-widget">
+                      <ul>
+                        <li v-for="tag of tags">
+                          <a  v-bind:class="tagCss(tag.name)" v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
+                        </li>
+                      </ul>
+                    </div>
                 </div>
               </div>
             </div>
@@ -392,6 +443,10 @@ export default {
         return true;
       }
       return false;
+    },
+
+    showImg(post) {
+      return "background-image: url('" + post.image + "');"
     },
 
     isEditable() {

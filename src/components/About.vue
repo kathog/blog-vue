@@ -1,162 +1,210 @@
 <template >
   <div>
-    <header id="header">
-      <!-- Page Header -->
-      <div id="post-header" class="page-header">
-        <div class="background-img" style="background-image: url('/static/img/nano.jpg');"></div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-16">
-              <div class="row">
-            <div class="col-md-8">
-              <div class="post-meta">
-              <div>
-                <router-link class="post-category" to="/">CRAFTSOFT BLOG</router-link>
-              </div>
-                <br />
-                <div>
-                  <a v-for="tag of tags" v-if="!showTag(tag)" v-bind:class="tagCss(tag.name)" v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
-                </div>
-                
-              </div>
-              <h1>DevOps tech blog</h1>
-            </div>
-            <div class="col-md-4">
-              <form class="login" @submit.prevent="search">
-                <input type="text" v-model="searchValue" placeholder="szukaj" class="input" style="background-color: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.5);">
-              </form>
-            </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- HEADER -->
+	<header id="header">
+		<!-- NAV -->
+		<div id="nav">
+			<!-- Top Nav -->
+			<div id="nav-top" style="background: #1b1c1e;">
+				<div class="container">
+
+          <div class="nav-logo">
+						<h3><a href="/#/" class="logo" style="color: #fff;">DevOps tech blog</a></h3>
+					</div>
+          
+
+          <!-- search & aside toggle -->
+					<div class="nav-btns">
+						<!-- <button class="aside-btn"><i class="fa fa-bars"></i></button> -->
+						<!-- <button class="search-btn"><i class="fa fa-search"></i></button> -->
+						<!-- <div id="nav-search">
+							<form>
+								<input class="input" name="search" placeholder="Enter your search...">
+							</form>
+							<button class="nav-close search-close">
+								<span></span>
+							</button> -->
+              <form class="search-top-form" @submit.prevent="search">
+                <!-- <span class="icon fa fa-search"></span> -->
+                    <input style="background: #323335; border:none" type="text" v-model="searchValue" placeholder="szukaj" class="input">
+            </form>
+						<!-- </div> -->
+            
+					</div>
+					<!-- /search & aside toggle -->
+
+
+				</div>
+			</div>
+
+
+      <div id="nav-bottom">
+				<div class="container">
+					<!-- nav -->
+					<ul class="nav-menu">
+            <li>
+              <a href="/#/" class="logo">HOME</a>
+            </li>
+            <li v-for="tag of tags" v-if="!showTag(tag)"><a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a></li>
+					</ul>
+				</div>
       </div>
-      <!-- /Page Header -->
-    </header>
 
-    <div class="section">
-      <!-- container -->
-      <div class="container">
-        <!-- row -->
-        <div class="row">
-          <div class="row">
-            <div class="col-md-8">
 
-              <div class="row">
-                <h1>O mnie</h1>
-                  <p>Nazywam się Daniel Lewiński</p><p>Od 2007 roku zajmuję się zawodowo programowaniem. Zanim rozpocząłem pracę w zawodzie programisty nie wiedziałem czy wybrać bezpieczeństwo systemów Linux czy programowanie.</p><p>Do dzisiaj lubię dłubać zarówno w systemach jak i programować. Na co dzień zajmuję się BigData, DevOps</p><p>Moim wiodącym językiem programowania jest JAVA, choć z programowania najbardziej interesuje mnie optymalizacja operacji, profilowanie, JIT, GC i JVM - lubię wyciskać na maksa co się da :)</p><p>Ostatnimi czasy ponownie wkręciłem się w programowanie c++ i hobbystycznie programuję w c++ i javascript (nodejs)</p><p>Ten blog jest od początku do końca napisany w c++ i vuejs :)</p>
-                
-              </div>
-            </div>
 
-            <div class="col-md-4">
-              <!-- catagories -->
-              <div class="aside-widget">
-                <div class="section-title">
-                  <h2>Kategorie</h2>
-                </div>
-                <div class="category-widget">
-                  <ul>
-                    <li v-for="tag of tags" v-if="!showTag(tag)"><a  v-bind:class="tagCss(tag.name)"  v-bind:href="tagUrl(tag.name)">{{tag.name}}<span>{{tag.value}}</span></a></li>
-                  </ul>
-                </div>
-              </div>
-              <!-- /catagories -->
+		</div>
+	</header>
 
-              <!-- tags -->
-              <div class="aside-widget">
+  <div class="page-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-offset-1 col-md-10 text-center">
+						<div class="author">
+							<img class="author-img center-block" src="https://api.craftsoft.eu/img/9d86e940-5de1-11e9-a604-b9289feaab85" alt="">
+							<h1 class="text-uppercase">Daniel Lewiński</h1>
+							<p class="lead">Od 2007 roku zajmuję się zawodowo programowaniem. Zanim rozpocząłem pracę w zawodzie programisty nie wiedziałem czy wybrać bezpieczeństwo systemów Linux czy programowanie. Do dzisiaj lubię dłubać zarówno w systemach jak i programować. Na co dzień zajmuję się BigData, DevOps Moim wiodącym językiem programowania jest JAVA, choć z programowania najbardziej interesuje mnie optymalizacja operacji, profilowanie, JIT, GC i JVM - lubię wyciskać na maksa co się da :) Ostatnimi czasy ponownie wkręciłem się w programowanie c++ i hobbystycznie programuję w c++ i javascript (nodejs) Ten blog jest od początku do końca napisany w c++ i vuejs :)</p>
+							<!-- <ul class="author-social">
+								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+								<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+							</ul> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="section" >
+    <div class="container">
+				<div class="row">
+
+<div class="col-md-8">
+      <!-- post widget -->
+					<div class="aside-widget">
+						<div class="section-title">
+							<h2 class="title">Popularne posty</h2>
+						</div>
+
+
+             <div class="post post-widget" v-for="post of mostRead">
+                    <a class="post-img" v-bind:href="postUrl(post.id)"><img v-bind:src="post.image" alt=""></a>
+                      <div class="post-body">
+                        <div class="post-category">
+                          <a v-for="tag of post.tags.split(',')" v-bind:class="tagCss(tag)" v-bind:href="tagUrl(tag)">{{tag}}</a>
+                        </div>
+                        <h3 class="post-title"><a v-bind:href="postUrl(post.id)">{{post.title}}</a></h3>
+                      </div>
+                  </div>
+				
+						<!-- /post -->
+					</div>
+</div>
+<div class="col-md-4">
+
+<div class="aside-widget">
+						<div class="section-title">
+							<h2 class="title">Kategorie</h2>
+						</div>
+						<div class="category-widget">
+							<ul>
+                <li v-for="tag of tags" v-if="!showTag(tag)">
+                      <a v-bind:href="tagUrl(tag.name)">
+                        {{tag.name}}
+                        <span>{{tag.value}}</span>
+                      </a>
+                    </li>
+							</ul>
+						</div>
+					</div>
+          <div class="aside-widget">
                 <div class="tags-widget">
                   <ul>
-                    <li v-for="tag of tags" v-if="showTag(tag)"><a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a></li>
+                    <li v-for="tag of tags" v-if="showTag(tag)">
+                      <a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
+                    </li>
                   </ul>
                 </div>
               </div>
               <!-- /tags -->
+          
 
-              <div class="aside-widget">
-                <div class="section-title">
-                  <h2>Najczęściej czytane</h2>
-                </div>
-                <div class="post post-widget" v-for="post of mostRead">
-								<div class="post-body-noimg">
-									<h3 class="post-title"><a v-bind:href="postUrl(post.id)">{{post.title}}</a></h3>
-                  <!-- <p v-html="showFirstP(post.description)"></p> -->
-                  <!-- <div style="display: none">{{post.count}}</div> -->
-								</div>
-							</div>
+
+				</div>
+    </div>
+</div>
+
+</div>
+
+
+    
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- container -->
+      <div class="container">
+        <!-- row -->
+        <div class="row">
+          <div class="col-md-5">
+            <div class="footer-widget">
+              <div class="footer-logo">
+                <h3 class="post-title">
+                  <a href="/" class="logo">CraftSoft</a>
+                </h3>
               </div>
-
-
-              <div class="aside-widget">
-                <div class="section-title">
-                  <h2>Najnowsze</h2>
-                </div>
-                <div class="post post-widget" v-for="post of lastAdded">
-                  <div class="post-body-noimg">
-                    <h3 class="post-title"><a v-bind:href="postUrl(post.id)">{{post.title}}</a></h3>
-                    <!-- <p v-html="showFirstP(post.description)"></p> -->
-                  </div>
-							  </div>
+              <ul class="footer-nav">
+                <!-- <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Advertisement</a></li>-->
+              </ul>
+              <div class="footer-copyright">
+                <span>
+                  &copy;
+                  Copyright &copy;All rights reserved | This template is made with
+                  <i
+                    class="fa fa-heart-o"
+                    aria-hidden="true"
+                  ></i> by
+                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                </span>
               </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-3"></div> -->
 
-
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="footer-widget">
+                  <h3 class="footer-title">About</h3>
+                  <ul class="footer-links">
+                    <li>
+                      <a href="/#/about">O mnie</a>
+                    </li>
+                    <li>
+                      <a href="/#/contact">Kontakt</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="footer-widget">
+                  <h3 class="footer-title">Kategorie</h3>
+                  <div  class="tags-widget">
+                      <ul>
+                        <li v-for="tag of tags">
+                          <a  v-bind:class="tagCss(tag.name)" v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <!-- /row -->
       </div>
-    </div>
-
-    <!-- Footer -->
-		<footer id="footer">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-          <div class="col-md-5">
-						<div class="footer-widget">
-							<div class="footer-logo">
-								<h3 class="post-title"><a href="/" class="logo">CraftSoft</a></h3>
-							</div>
-							<ul class="footer-nav">
-								<!-- <li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Advertisement</a></li> -->
-							</ul>
-							<div class="footer-copyright">
-								<span>&copy;
-Copyright &copy;All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></span>
-							</div>
-						</div>
-					</div>
-          <div class="col-md-3">
-          </div>
-
-					<div class="col-md-4">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="footer-widget">
-									<h3 class="footer-title">About</h3>
-									<ul class="footer-links">
-										<li><a href="/#/about">O mnie</a></li>
-                    <li><a href="/#/contact">Kontakt</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="footer-widget">
-									<h3 class="footer-title">Kategorie</h3>
-									<ul class="footer-links">
-                    <li v-for="tag of tags" v-if="!showTag(tag)"><a  v-bind:href="tagUrl(tag.name)">{{tag.name}}</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</footer>
+      <!-- /container -->
+    </footer>
 		<!-- /Footer -->
 
     
