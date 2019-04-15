@@ -1,82 +1,89 @@
 <template>
   <div>
+    <!-- HEADER -->
+    <header id="header">
+      <!-- NAV -->
+      <div id="nav">
+        <!-- Top Nav -->
+        <div id="nav-top" style="background: #1b1c1e;">
+          <div class="container">
+            <div class="nav-logo">
+              <h3>
+                <a href="/#/" class="logo" style="color: #fff;">DevOps tech blog</a>
+              </h3>
+            </div>
 
-        <!-- HEADER -->
-	<header id="header">
-		<!-- NAV -->
-		<div id="nav">
-			<!-- Top Nav -->
-			<div id="nav-top" style="background: #1b1c1e;">
-				<div class="container">
-
-          <div class="nav-logo">
-						<h3><a href="/#/" class="logo" style="color: #fff;">DevOps tech blog</a></h3>
-					</div>
-          
-
-          <!-- search & aside toggle -->
-					<div class="nav-btns">
-						<!-- <button class="aside-btn"><i class="fa fa-bars"></i></button> -->
-						<!-- <button class="search-btn"><i class="fa fa-search"></i></button> -->
-						<!-- <div id="nav-search">
+            <!-- search & aside toggle -->
+            <div class="nav-btns">
+              <!-- <button class="aside-btn"><i class="fa fa-bars"></i></button> -->
+              <!-- <button class="search-btn"><i class="fa fa-search"></i></button> -->
+              <!-- <div id="nav-search">
 							<form>
 								<input class="input" name="search" placeholder="Enter your search...">
 							</form>
 							<button class="nav-close search-close">
 								<span></span>
-							</button> -->
+              </button>-->
               <form class="search-top-form" @submit.prevent="search">
                 <!-- <span class="icon fa fa-search"></span> -->
-                    <input style="background: #323335; border:none" type="text" v-model="searchValue" placeholder="szukaj" class="input">
-            </form>
-						<!-- </div> -->
-            
-					</div>
-					<!-- /search & aside toggle -->
+                <input
+                  style="background: #323335; border:none"
+                  type="text"
+                  v-model="searchValue"
+                  placeholder="szukaj"
+                  class="input"
+                >
+              </form>
+              <!-- </div> -->
+            </div>
+            <!-- /search & aside toggle -->
+          </div>
+        </div>
 
-
-				</div>
-			</div>
-
-
-      <div id="nav-bottom">
-				<div class="container">
-					<!-- nav -->
-					<ul class="nav-menu">
-            <li>
-              <a href="/#/" class="logo">HOME</a>
-            </li>
-            <li v-for="tag of tags" v-if="!showTag(tag)"><a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a></li>
-					</ul>
-				</div>
+        <div id="nav-bottom">
+          <div class="container">
+            <!-- nav -->
+            <ul class="nav-menu">
+              <li>
+                <a href="/#/" class="logo">HOME</a>
+              </li>
+              <li v-for="tag of tags" v-if="!showTag(tag)">
+                <a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
-
-
-		</div>
-
-    <!-- PAGE HEADER -->
-		<div id="post-header" class="page-header">
-			<div class="page-header-bg" v-bind:style="showImg(post)" data-stellar-background-ratio="0.5"></div>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-10">
-						<div class="post-category">
-							<a v-for="tag of post.tags.split(',')"  v-bind:href="tagUrl(tag)">{{tag}}</a>
-						</div>
-						<h1>{{post.title}}</h1>
-						<ul class="post-meta">
-							<li><a href="/#/about">Nerull</a></li>
-							<li>{{ getDate(post.date) }}</li>
-							<li><i class="fa fa-comments"></i> 0</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /PAGE HEADER -->
-	</header>
-
+      <!-- PAGE HEADER -->
+      <div id="post-header" class="page-header">
+        <div
+          class="page-header-bg"
+          v-bind:style="showImg(post)"
+          data-stellar-background-ratio="0.5"
+        ></div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="post-category" v-if="post.tags">
+                <a v-for="tag of post.tags.split(',')" v-bind:href="tagUrl(tag)">{{tag}}</a>
+              </div>
+              <h1>{{post.title}}</h1>
+              <ul class="post-meta">
+                <li>
+                  <a href="/#/about">Nerull</a>
+                </li>
+                <li>{{ getDate(post.date) }}</li>
+                <li>
+                  <i class="fa fa-comments"></i> 0
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /PAGE HEADER -->
+    </header>
 
     <div class="section">
       <!-- container -->
@@ -93,22 +100,20 @@
                       <!--                      <h3 class="post-title"><a v-bind:href="postUrl(post.id)">{{post.title}}</a></h3>-->
                       <p v-html="post.content"></p>
                     </div>
-                    
                   </div>
 
                   <div class="aside-widget" v-if="editable">
-                      <div class="tags-widget">
-                        <ul>
-                          <li>
-                            <router-link class="post-category" :to="'/edit/'+post.id">Edytuj</router-link>
-                          </li>
-                          <li>
-                            <a href="#" class="post-category" v-on:click="deletePost()">Usuń</a>
-                          </li>
-                        </ul>
-                      </div>
+                    <div class="tags-widget">
+                      <ul>
+                        <li>
+                          <router-link class="post-category" :to="'/edit/'+post.id">Edytuj</router-link>
+                        </li>
+                        <li>
+                          <a href="#" class="post-category" v-on:click="deletePost()">Usuń</a>
+                        </li>
+                      </ul>
                     </div>
-
+                  </div>
                 </div>
               </div>
 
@@ -133,86 +138,39 @@
                       <div class="media-heading">
                         <h4>{{comment0.username}}</h4>
                         <span class="time">{{getDate(comment0.date)}}</span>
-                        <a v-if="editable" v-on:click="removeComment(comment0.id)" class="reply">Usuń</a>
+                        <a
+                          v-if="editable"
+                          v-on:click="removeComment(comment0.id)"
+                          class="reply"
+                        >Usuń</a>
                       </div>
                       <p>{{decodeURIComponent(comment0.message)}}</p>
-                      <!-- <p style="display: none">{{comment0.id}}</p> -->
-                      <!-- comment -->
-                      <!-- <div class="media">
-											<div class="media-left">
-												<img class="media-object" src="/static/img/author.png" alt="">
-											</div>
-											<div class="media-body">
-												<div class="media-heading">
-													<h4>John Doe</h4>
-													<span class="time">March 27, 2018 at 8:00 am</span>
-													<a href="#" class="reply">Reply</a>
-												</div>
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-											</div>
-                      </div>-->
                       <!-- /comment -->
                     </div>
                   </div>
                   <!-- /comment -->
                 </div>
               </div>
-              <!-- /comments -->
-              <!-- reply -->
-              <!-- <div class="section-row">
-                <div class="section-title">
-                  <h2>Zostaw komentarz</h2>
-                  <p>Twój mail nie zostanie upubliczniony. Wymagane pola są oznaczone *</p>
-                </div>
-                <form class="post-reply" @submit.prevent="doSend">
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <span>Imię *</span>
-                        <input class="input" type="text" v-model="comment.username" required>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <span>Email *</span>
-                        <input class="input" type="email" v-model="comment.email" required>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <textarea
-                          class="input"
-                          v-model="comment.message"
-                          placeholder="Wiadomość"
-                          required
-                        ></textarea>
-                      </div>
-                      <button class="primary-button">Wyślij</button>
-                    </div>
-                  </div>
-                </form>
-              </div> -->
-              <!-- /reply -->
             </div>
 
             <div class="col-md-4">
               <!-- category widget -->
-					<div class="aside-widget">
-						<div class="section-title">
-							<h2 class="title">Kategorie</h2>
-						</div>
-						<div class="category-widget">
-							<ul>
-                <li v-for="tag of tags" v-if="!showTag(tag)">
+              <div class="aside-widget">
+                <div class="section-title">
+                  <h2 class="title">Kategorie</h2>
+                </div>
+                <div class="category-widget">
+                  <ul>
+                    <li v-for="tag of tags" v-if="!showTag(tag)">
                       <a v-bind:href="tagUrl(tag.name)">
                         {{tag.name}}
                         <span>{{tag.value}}</span>
                       </a>
                     </li>
-							</ul>
-						</div>
-					</div>
-					<!-- /category widget -->
+                  </ul>
+                </div>
+              </div>
+              <!-- /category widget -->
               <!-- tags -->
               <div class="aside-widget">
                 <div class="tags-widget">
@@ -225,25 +183,33 @@
               </div>
               <!-- /tags -->
               <!-- post widget -->
-					<div class="aside-widget">
-						<div class="section-title">
-							<h2 class="title">Popularne posty</h2>
-						</div>
+              <div class="aside-widget">
+                <div class="section-title">
+                  <h2 class="title">Popularne posty</h2>
+                </div>
 
-
-             <div class="post post-widget" v-for="post of mostRead">
-                    <a class="post-img" v-bind:href="postUrl(post.id)"><img v-bind:src="post.image" alt=""></a>
-                      <div class="post-body">
-                        <div class="post-category">
-                          <a v-for="tag of post.tags.split(',')" v-bind:class="tagCss(tag)" v-bind:href="tagUrl(tag)">{{tag}}</a>
-                        </div>
-                        <h3 class="post-title"><a v-bind:href="postUrl(post.id)">{{post.title}}</a></h3>
-                      </div>
+                <div class="post post-widget" v-for="post of mostRead">
+                  <a class="post-img" v-bind:href="postUrl(post.id)">
+                    <img v-if="post.image" v-bind:src="post.image" alt>
+                    <img v-if="!post.image" src="/static/img/empty.png" alt>
+                  </a>
+                  <div class="post-body">
+                    <div class="post-category" v-if="post.tags">
+                      <a
+                        v-for="tag of post.tags.split(',')"
+                        v-bind:class="tagCss(tag)"
+                        v-bind:href="tagUrl(tag)"
+                      >{{tag}}</a>
+                    </div>
+                    <h3 class="post-title">
+                      <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
+                    </h3>
                   </div>
-				
-						<!-- /post -->
-					</div>
-					<!-- /post widget -->
+                </div>
+
+                <!-- /post -->
+              </div>
+              <!-- /post widget -->
             </div>
           </div>
         </div>
@@ -300,13 +266,16 @@
               <div class="col-md-9">
                 <div class="footer-widget">
                   <h3 class="footer-title">Kategorie</h3>
-                  <div  class="tags-widget">
-                      <ul>
-                        <li v-for="tag of tags">
-                          <a  v-bind:class="tagCss(tag.name)" v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
-                        </li>
-                      </ul>
-                    </div>
+                  <div class="tags-widget">
+                    <ul>
+                      <li v-for="tag of tags">
+                        <a
+                          v-bind:class="tagCss(tag.name)"
+                          v-bind:href="tagUrl(tag.name)"
+                        >{{tag.name}}</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -324,7 +293,6 @@ import axios from "axios";
 import moment from "moment";
 import Gravatar from "vue-gravatar";
 
-
 export default {
   name: "post",
 
@@ -333,9 +301,12 @@ export default {
   },
 
   data() {
-    axios.get("/tagCloud").then(response => {
+    axios
+      .get("/tagCloud")
+      .then(response => {
         this.tags = response.data;
-      }).catch(e => {
+      })
+      .catch(e => {
         console.log(e);
         this.errors.push(e);
       });
@@ -371,15 +342,15 @@ export default {
         this.errors.push(e);
       });
 
-    axios
-      .get("/comments/" + this.$route.params.id)
-      .then(response => {
-        this.comments = response.data;
-      })
-      .catch(e => {
-        console.log(e);
-        this.errors.push(e);
-      });
+    // axios
+    //   .get("/comments/" + this.$route.params.id)
+    //   .then(response => {
+    //     this.comments = response.data;
+    //   })
+    //   .catch(e => {
+    //     console.log(e);
+    //     this.errors.push(e);
+    //   });
 
     if (!this.editable) {
       axios
@@ -398,6 +369,7 @@ export default {
       tags0: [],
       errors: [],
       editable: false,
+      searchValue: "",
       mostRead: [],
       lastAdded: [],
       comment: { username: "", email: "", message: "", postId: "" },
@@ -413,7 +385,7 @@ export default {
     },
 
     postUrl(postId) {
-      return "/#/post/" + postId;
+      return "https://craftsoft.eu/#/post/" + postId;
     },
 
     tagUrl(tag) {
@@ -446,7 +418,7 @@ export default {
     },
 
     showImg(post) {
-      return "background-image: url('" + post.image + "');"
+      return "background-image: url('" + post.image + "');";
     },
 
     isEditable() {
@@ -480,8 +452,7 @@ export default {
         .then(response => {
           this.$router.push("/");
         })
-        .catch(e => {
-        });
+        .catch(e => {});
     },
 
     showFirstP(description) {
@@ -493,18 +464,28 @@ export default {
       return description.substring(0, pIdx);
     },
 
-    removeComment (commentId) {
-    axios.post("/deleteComment/" + commentId).then(response => {
-          axios.get("/comments/" + this.post.id).then(response => {
+    removeComment(commentId) {
+      axios
+        .post("/deleteComment/" + commentId)
+        .then(response => {
+          axios
+            .get("/comments/" + this.post.id)
+            .then(response => {
               this.comments = response.data;
-            }).catch(e => {
+            })
+            .catch(e => {
               console.log(e);
               this.errors.push(e);
             });
-          
-        }).catch(e => {
+        })
+        .catch(e => {
           console.log(e);
         });
+    },
+
+    search: function(event) {
+      this.$router.push("/?q=" + this.searchValue);
+      this.searchValue = "";
     },
 
     doSend: function(event) {
@@ -520,24 +501,34 @@ export default {
         this.post.id +
         '"}';
 
-console.log(commentMsg);
-      axios.post("/pushComment/" + this.post.id, msg).then(response => {
-          axios.get("/comments/" + this.post.id).then(response => {
+      console.log(commentMsg);
+      axios
+        .post("/pushComment/" + this.post.id, msg)
+        .then(response => {
+          axios
+            .get("/comments/" + this.post.id)
+            .then(response => {
               this.comments = response.data;
-              this.comment.email = '';
-              this.comment.message = '';
-              this.comment.username = '';
-            }).catch(e => {
+              this.comment.email = "";
+              this.comment.message = "";
+              this.comment.username = "";
+            })
+            .catch(e => {
               console.log(e);
               this.errors.push(e);
             });
-            
-          var message = "dodano nowy komentarz o treści: '"+commentMsg +"' do posta https://craftsoft.eu/#/post/" + this.post.id; 
-          msg = "{\"email\": \"nerull@craftsoft.eu\", \"message\": \"" + message + "\"}";
-          axios.post("/send", msg).then(response => {
-            })
-            .catch(e => {
-            });  
+
+          var message =
+            "dodano nowy komentarz o treści: '" +
+            commentMsg +
+            "' do posta https://craftsoft.eu/#/post/" +
+            this.post.id;
+          msg =
+            '{"email": "nerull@craftsoft.eu", "message": "' + message + '"}';
+          axios
+            .post("/send", msg)
+            .then(response => {})
+            .catch(e => {});
         })
         .catch(e => {
           console.log(e);

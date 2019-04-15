@@ -1,25 +1,74 @@
 <template>
   <div>
+    <!-- HEADER -->
     <header id="header">
-      <!-- Page Header -->
+      <!-- NAV -->
+      <div id="nav">
+        <!-- Top Nav -->
+        <div id="nav-top" style="background: #1b1c1e;">
+          <div class="container">
+            <div class="nav-logo">
+              <h3>
+                <a href="/#/" class="logo" style="color: #fff;">DevOps tech blog</a>
+              </h3>
+            </div>
+
+            <!-- search & aside toggle -->
+            <div class="nav-btns">
+              <form class="search-top-form" @submit.prevent="search">
+                <input
+                  style="background: #323335; border:none"
+                  type="text"
+                  v-model="searchValue"
+                  placeholder="szukaj"
+                  class="input"
+                >
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div id="nav-bottom">
+          <div class="container">
+            <!-- nav -->
+            <ul class="nav-menu">
+              <li>
+                <a href="/#/" class="logo">HOME</a>
+              </li>
+              <li v-for="tag of tags" v-if="!showTag(tag)">
+                <a v-bind:href="tagUrl(tag.value)">{{tag.value}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+     <!-- PAGE HEADER -->
       <div id="post-header" class="page-header">
-        <div class="background-img" style="background-image: url('/static/img/nano.jpg');"></div>
+        <div
+          class="page-header-bg"
+          v-bind:style="showImg(post)"
+          data-stellar-background-ratio="0.5"
+        ></div>
         <div class="container">
           <div class="row">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="post-meta">
-                  <div>
-                    <router-link class="post-category" to="/">CRAFTSOFT BLOG</router-link>
-                  </div>
-                </div>
-                <h1>DevOps tech blog</h1>
-              </div>
+            <div class="col-md-10">
+              <h1>{{post.title}}</h1>
+              <ul class="post-meta">
+                <li>
+                  <a href="/#/about">Nerull</a>
+                </li>
+                <li>{{ getDate(post.date) }}</li>
+                <li>
+                  <i class="fa fa-comments"></i> 0
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-      <!-- /Page Header -->
+      <!-- /PAGE HEADER -->
     </header>
 
     <div class="section">
@@ -76,6 +125,78 @@
         </div>
       </div>
     </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- container -->
+      <div class="container">
+        <!-- row -->
+        <div class="row">
+          <div class="col-md-5">
+            <div class="footer-widget">
+              <div class="footer-logo">
+                <h3 class="post-title">
+                  <a href="/" class="logo">CraftSoft</a>
+                </h3>
+              </div>
+              <ul class="footer-nav">
+                <!-- <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Advertisement</a></li>-->
+              </ul>
+              <div class="footer-copyright">
+                <span>
+                  &copy;
+                  Copyright &copy;All rights reserved | This template is made with
+                  <i
+                    class="fa fa-heart-o"
+                    aria-hidden="true"
+                  ></i> by
+                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-3"></div> -->
+
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="footer-widget">
+                  <h3 class="footer-title">About</h3>
+                  <ul class="footer-links">
+                    <li>
+                      <a href="/#/about">O mnie</a>
+                    </li>
+                    <li>
+                      <a href="/#/contact">Kontakt</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="footer-widget">
+                  <h3 class="footer-title">Kategorie</h3>
+                  <div class="tags-widget">
+                    <ul>
+                      <li v-for="tag of tags">
+                        <a
+                          v-bind:href="tagUrl(tag.value)"
+                        >{{tag.value}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /row -->
+      </div>
+      <!-- /container -->
+    </footer>
+    <!-- /Footer -->
+
+
   </div>
 </template>
 
@@ -153,7 +274,8 @@ export default {
       tags: [],
       tags0: [],
       errors: [],
-      tag: ""
+      tag: "",
+      searchValue: "",
     };
   },
 
@@ -199,7 +321,7 @@ export default {
     },
 
     showTag(tag) {
-      let idx = this.tags.findIndex(t => t.name == tag.name);
+      let idx = this.tags.findIndex(t => t.value == tag.value);
       if (idx > 4) {
         return true;
       }
@@ -271,6 +393,15 @@ export default {
             }
           });
       }
+    },
+
+    search: function(event) {
+      this.$router.push("/?q=" + this.searchValue);
+      this.searchValue = "";
+    },
+
+    showImg(post) {
+      return "background-image: url('" + post.image + "');";
     },
 
     isEditable() {
