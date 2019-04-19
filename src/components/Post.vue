@@ -1,62 +1,8 @@
 <template>
   <div>
-    <!-- HEADER -->
-    <header id="header">
-      <!-- NAV -->
-      <div id="nav">
-        <!-- Top Nav -->
-        <div id="nav-top" style="background: #1b1c1e;">
-          <div class="container">
-            <div class="nav-logo">
-              <h3>
-                <a href="/#/" class="logo" style="color: #fff;">DevOps tech blog</a>
-              </h3>
-            </div>
+    <Header/>
 
-            <!-- search & aside toggle -->
-            <div class="nav-btns">
-              <!-- <button class="aside-btn"><i class="fa fa-bars"></i></button> -->
-              <!-- <button class="search-btn"><i class="fa fa-search"></i></button> -->
-              <!-- <div id="nav-search">
-							<form>
-								<input class="input" name="search" placeholder="Enter your search...">
-							</form>
-							<button class="nav-close search-close">
-								<span></span>
-              </button>-->
-              <form class="search-top-form" @submit.prevent="search">
-                <!-- <span class="icon fa fa-search"></span> -->
-                <input
-                  style="background: #323335; border:none"
-                  type="text"
-                  v-model="searchValue"
-                  placeholder="szukaj"
-                  class="input"
-                >
-              </form>
-              <!-- </div> -->
-            </div>
-            <!-- /search & aside toggle -->
-          </div>
-        </div>
-
-        <div id="nav-bottom">
-          <div class="container">
-            <!-- nav -->
-            <ul class="nav-menu">
-              <li>
-                <a href="/#/" class="logo">HOME</a>
-              </li>
-              <li v-for="tag of tags" v-if="!showTag(tag)">
-                <a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- PAGE HEADER -->
-      <div id="post-header" class="page-header">
+    <div id="post-header" class="page-header" v-if="post">
         <div
           class="page-header-bg"
           v-bind:style="showImg(post)"
@@ -82,8 +28,6 @@
           </div>
         </div>
       </div>
-      <!-- /PAGE HEADER -->
-    </header>
 
     <div class="section">
       <!-- container -->
@@ -91,7 +35,7 @@
         <!-- row -->
         <div class="row">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <div class="row">
                 <div class="col-md-12">
                   <div class="post post-row">
@@ -151,119 +95,56 @@
                   <!-- /comment -->
                 </div>
               </div>
+
+
             </div>
 
-            <div class="col-md-4">
-              <!-- category widget -->
-              <div class="aside-widget">
-                <div class="section-title">
-                  <h2 class="title">Kategorie</h2>
-                </div>
-                <div class="category-widget">
-                  <ul>
-                    <li v-for="tag of tags" v-if="!showTag(tag)">
-                      <a v-bind:href="tagUrl(tag.name)">
-                        {{tag.name}}
-                        <span>{{tag.value}}</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <!-- /category widget -->
-              <!-- tags -->
-              <div class="aside-widget">
-                <div class="tags-widget">
-                  <ul>
-                    <li v-for="tag of tags" v-if="showTag(tag)">
-                      <a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <!-- /tags -->
-              <!-- post widget -->
+
+          </div>
+
+          <div class="row">
+
+
+              <div class="col-md-8">
               <div class="aside-widget">
                 <div class="section-title">
                   <h2 class="title">Popularne posty</h2>
                 </div>
-
-                <div class="post post-widget" v-for="post of mostRead">
-                  <a class="post-img" v-bind:href="postUrl(post.id)">
-                    <img v-if="post.image" v-bind:src="post.image" alt>
-                    <img v-if="!post.image" src="/static/img/empty.png" alt>
-                  </a>
-                  <div class="post-body">
-                    <div class="post-category" v-if="post.tags">
-                      <a
-                        v-for="tag of post.tags.split(',')"
-                        v-bind:class="tagCss(tag)"
-                        v-bind:href="tagUrl(tag)"
-                      >{{tag}}</a>
+                <div class="row">
+                    <div class="col-md-4" v-for="(post, index) of mostRead">
+                      <div class="post post-sm" v-if="index < 3" >
+                        <a class="post-img" v-bind:href="postUrl(post.id)">
+                          <img v-if="post.image" v-bind:src="post.image" alt>
+                          <img v-if="!post.image" src="/static/img/empty.png" alt>
+                        </a>
+                        <div class="post-body">
+                          <div class="post-category">
+                            <a
+                              v-for="tag of post.tags.split(',')"
+                              v-bind:class="tagCss(tag)"
+                              v-bind:href="tagUrl(tag)"
+                            >{{tag}}</a>
+                          </div>
+                          <h3 class="post-title">
+                              <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
+                          </h3>
+                          <ul class="post-meta">
+                            <li>
+                              <a href="/#/about">Nerull</a>
+                            </li>
+                            <li>{{ getDate(post.date) }}</li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                    <h3 class="post-title">
-                      <a v-bind:href="postUrl(post.id)">{{post.title}}</a>
-                    </h3>
-                  </div>
-                </div>
 
+                </div>
                 <!-- /post -->
               </div>
               <!-- /post widget -->
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Footer -->
-    <footer id="footer">
-      <!-- container -->
-      <div class="container">
-        <!-- row -->
-        <div class="row">
-          <div class="col-md-5">
-            <div class="footer-widget">
-              <div class="footer-logo">
-                <h3 class="post-title">
-                  <a href="/" class="logo">CraftSoft</a>
-                </h3>
-              </div>
-              <ul class="footer-nav">
-                <!-- <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Advertisement</a></li>-->
-              </ul>
-              <div class="footer-copyright">
-                <span>
-                  &copy;
-                  Copyright &copy;All rights reserved | This template is made with
-                  <i
-                    class="fa fa-heart-o"
-                    aria-hidden="true"
-                  ></i> by
-                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                </span>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="col-md-3"></div> -->
-
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="footer-widget">
-                  <h3 class="footer-title">About</h3>
-                  <ul class="footer-links">
-                    <li>
-                      <a href="/#/about">O mnie</a>
-                    </li>
-                    <li>
-                      <a href="/#/contact">Kontakt</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-9">
+            <div class="col-md-4">
                 <div class="footer-widget">
                   <h3 class="footer-title">Kategorie</h3>
                   <div class="tags-widget">
@@ -278,26 +159,45 @@
                   </div>
                 </div>
               </div>
-            </div>
+
+
           </div>
+
         </div>
-        <!-- /row -->
       </div>
-      <!-- /container -->
-    </footer>
-    <!-- /Footer -->
+    </div>
+
+    <Footer/>
   </div>
 </template>
 <script>
 import axios from "axios";
 import moment from "moment";
 import Gravatar from "vue-gravatar";
+import Footer from "./Footer.vue"
+import Header from "./Header.vue"
 
 export default {
   name: "post",
 
   components: {
-    "v-gravatar": Gravatar
+    "v-gravatar": Gravatar,
+    Footer,
+    Header
+  },
+
+  watch: {
+    $route(to, from) {
+      axios.get("/post/" + this.$route.params.id).then(response => {
+        this.post = response.data;
+        this.isEditable();
+        window.scrollTo(0,0);
+      })
+      .catch(e => {
+        console.log(e);
+        this.errors.push(e);
+      });
+    },
   },
 
   data() {
@@ -311,9 +211,7 @@ export default {
         this.errors.push(e);
       });
 
-    axios
-      .get("/post/" + this.$route.params.id)
-      .then(response => {
+    axios.get("/post/" + this.$route.params.id).then(response => {
         this.post = response.data;
         this.isEditable();
       })
@@ -385,7 +283,7 @@ export default {
     },
 
     postUrl(postId) {
-      return "https://craftsoft.eu/#/post/" + postId;
+      return "/#/post/" + postId;
     },
 
     tagUrl(tag) {

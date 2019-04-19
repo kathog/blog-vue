@@ -1,48 +1,7 @@
 <template>
   <div>
     <!-- HEADER -->
-    <header id="header">
-      <!-- NAV -->
-      <div id="nav">
-        <!-- Top Nav -->
-        <div id="nav-top" style="background: #1b1c1e;">
-          <div class="container">
-            <div class="nav-logo">
-              <h3>
-                <a href="/#/" class="logo" style="color: #fff;">DevOps tech blog</a>
-              </h3>
-            </div>
-
-            <!-- search & aside toggle -->
-            <div class="nav-btns">
-              <form class="search-top-form" @submit.prevent="search">
-                <input
-                  style="background: #323335; border:none"
-                  type="text"
-                  v-model="searchValue"
-                  placeholder="szukaj"
-                  class="input"
-                >
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div id="nav-bottom">
-          <div class="container">
-            <!-- nav -->
-            <ul class="nav-menu">
-              <li>
-                <a href="/#/" class="logo">HOME</a>
-              </li>
-              <li v-for="tag of tags" v-if="!showTag(tag)">
-                <a v-bind:href="tagUrl(tag.value)">{{tag.value}}</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </header>
+    <Header />
 
      <!-- PAGE HEADER -->
       <div id="post-header" class="page-header">
@@ -69,7 +28,6 @@
         </div>
       </div>
       <!-- /PAGE HEADER -->
-    </header>
 
     <div class="section">
       <!-- container -->
@@ -126,75 +84,7 @@
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer id="footer">
-      <!-- container -->
-      <div class="container">
-        <!-- row -->
-        <div class="row">
-          <div class="col-md-5">
-            <div class="footer-widget">
-              <div class="footer-logo">
-                <h3 class="post-title">
-                  <a href="/" class="logo">CraftSoft</a>
-                </h3>
-              </div>
-              <ul class="footer-nav">
-                <!-- <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Advertisement</a></li>-->
-              </ul>
-              <div class="footer-copyright">
-                <span>
-                  &copy;
-                  Copyright &copy;All rights reserved | This template is made with
-                  <i
-                    class="fa fa-heart-o"
-                    aria-hidden="true"
-                  ></i> by
-                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                </span>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="col-md-3"></div> -->
-
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="footer-widget">
-                  <h3 class="footer-title">About</h3>
-                  <ul class="footer-links">
-                    <li>
-                      <a href="/#/about">O mnie</a>
-                    </li>
-                    <li>
-                      <a href="/#/contact">Kontakt</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-9">
-                <div class="footer-widget">
-                  <h3 class="footer-title">Kategorie</h3>
-                  <div class="tags-widget">
-                    <ul>
-                      <li v-for="tag of tags">
-                        <a
-                          v-bind:href="tagUrl(tag.value)"
-                        >{{tag.value}}</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /row -->
-      </div>
-      <!-- /container -->
-    </footer>
-    <!-- /Footer -->
+    <Footer />
 
 
   </div>
@@ -207,6 +97,8 @@ import Vue from "vue";
 // import YimoVueEditor from 'yimo-vue-editor'
 import VueTagsInput from "@johmun/vue-tags-input";
 import VEditor from "yimo-vue-editor";
+import Header from "./Header.vue"
+import Footer from "./Footer.vue"
 
 Vue.use(VEditor, {
   name: "v-editor-app",
@@ -233,7 +125,9 @@ export default {
   name: "Edit",
   components: {
     YimoVueEditor,
-    VueTagsInput
+    VueTagsInput,
+    Footer,
+    Header
   },
 
   data() {

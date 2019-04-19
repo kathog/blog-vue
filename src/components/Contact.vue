@@ -1,60 +1,6 @@
 <template >
   <div>
-    <!-- HEADER -->
-    <header id="header">
-      <!-- NAV -->
-      <div id="nav">
-        <!-- Top Nav -->
-        <div id="nav-top" style="background: #1b1c1e;">
-          <div class="container">
-            <div class="nav-logo">
-              <h3>
-                <a href="/#/" class="logo" style="color: #fff;">DevOps tech blog</a>
-              </h3>
-            </div>
-
-            <!-- search & aside toggle -->
-            <div class="nav-btns">
-              <!-- <button class="aside-btn"><i class="fa fa-bars"></i></button> -->
-              <!-- <button class="search-btn"><i class="fa fa-search"></i></button> -->
-              <!-- <div id="nav-search">
-							<form>
-								<input class="input" name="search" placeholder="Enter your search...">
-							</form>
-							<button class="nav-close search-close">
-								<span></span>
-              </button>-->
-              <form class="search-top-form" @submit.prevent="search">
-                <!-- <span class="icon fa fa-search"></span> -->
-                <input
-                  style="background: #323335; border:none"
-                  type="text"
-                  v-model="searchValue"
-                  placeholder="szukaj"
-                  class="input"
-                >
-              </form>
-              <!-- </div> -->
-            </div>
-            <!-- /search & aside toggle -->
-          </div>
-        </div>
-
-        <div id="nav-bottom">
-          <div class="container">
-            <!-- nav -->
-            <ul class="nav-menu">
-              <li>
-                <a href="/#/" class="logo">HOME</a>
-              </li>
-              <li v-for="tag of tags" v-if="!showTag(tag)">
-                <a v-bind:href="tagUrl(tag.name)">{{tag.name}}</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </header>
+    <Header />
 
     <div class="page-header">
       <div class="container">
@@ -153,82 +99,15 @@
       <!-- </div> -->
     </div>
 
-    <!-- Footer -->
-    <footer id="footer">
-      <!-- container -->
-      <div class="container">
-        <!-- row -->
-        <div class="row">
-          <div class="col-md-5">
-            <div class="footer-widget">
-              <div class="footer-logo">
-                <h3 class="post-title">
-                  <a href="/" class="logo">CraftSoft</a>
-                </h3>
-              </div>
-              <ul class="footer-nav">
-                <!-- <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Advertisement</a></li>-->
-              </ul>
-              <div class="footer-copyright">
-                <span>
-                  &copy;
-                  Copyright &copy;All rights reserved | This template is made with
-                  <i
-                    class="fa fa-heart-o"
-                    aria-hidden="true"
-                  ></i> by
-                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                </span>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="col-md-3"></div> -->
-
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="footer-widget">
-                  <h3 class="footer-title">About</h3>
-                  <ul class="footer-links">
-                    <li>
-                      <a href="/#/about">O mnie</a>
-                    </li>
-                    <li>
-                      <a href="/#/contact">Kontakt</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-9">
-                <div class="footer-widget">
-                  <h3 class="footer-title">Kategorie</h3>
-                  <div class="tags-widget">
-                    <ul>
-                      <li v-for="tag of tags">
-                        <a
-                          v-bind:class="tagCss(tag.name)"
-                          v-bind:href="tagUrl(tag.name)"
-                        >{{tag.name}}</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /row -->
-      </div>
-      <!-- /container -->
-    </footer>
-    <!-- /Footer -->
+    <Footer/>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import moment from "moment";
+import Footer from "./Footer.vue"
+import Header from "./Header.vue"
 
 export default {
   name: "Index",
@@ -279,6 +158,11 @@ export default {
           this.errors.push(e);
         });
     }
+  },
+
+  components: {
+    Footer,
+    Header
   },
 
   created() {
